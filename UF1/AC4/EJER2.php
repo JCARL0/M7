@@ -8,13 +8,14 @@ nombres i retorni un altre array amb informació estadísƟca:
 El resultat de la funció s’ha de mostrar en una taula HTML amb les estadísƟques generades. -->
 <?php
 // Funcion que calcula y muestra estadisticas de un array
-function estadisticas($numeros) {
+function estadisticas($numeros)
+{
     // Calcular suma, maximo, minimo y media
     $suma = array_sum($numeros);
     $maximo = max($numeros);
     $minimo = min($numeros);
     $media = $suma / count($numeros);
-    
+
     // Mostrar en una tabla HTML
     echo "<table border='1'>
             <tr><th>Estadistica</th><th>Valor</th></tr>
