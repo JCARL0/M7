@@ -8,11 +8,16 @@ $db = 'm7uf1projecte';
 // Conexión al servidor MySQL
 $conn = new mysqli($host, $user, $password);
 
+// Comprobar la conexión
+if ($conn->connect_error) {
+    die("Conexión fallida: " . $conn->connect_error);
+}
+
 // Crear la base de datos si no existe
 $conn->query("CREATE DATABASE IF NOT EXISTS $db");
 $conn->select_db($db);
 
-// Crear la tabla de usuarios
+// Crear la tabla de usuarios si no existe
 $conn->query("
     CREATE TABLE IF NOT EXISTS usuaris (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -22,7 +27,7 @@ $conn->query("
     )
 ");
 
-// Crear la tabla de contenido
+// Crear la tabla de contenido si no existe
 $conn->query("
     CREATE TABLE IF NOT EXISTS contingut (
         id INT AUTO_INCREMENT PRIMARY KEY,

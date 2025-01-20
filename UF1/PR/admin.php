@@ -1,34 +1,33 @@
 <?php
-// Iniciar sesión
 session_start();
-// Verificar que el usuario sea administrador
 if ($_SESSION['rol'] !== 'Administrador') {
     header('Location: login.php');
     exit;
 }
 include 'db_connection.php';
 
-// Procesar el formulario de contenido
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Agregar contenido
     $titol = htmlspecialchars($_POST['titol']);
     $descripcio = htmlspecialchars($_POST['descripcio']);
 
-    // Insertar un nuevo contenido en la base de datos
     $stmt = $conn->prepare("INSERT INTO contingut (titol, descripcio) VALUES (?, ?)");
     $stmt->bind_param("ss", $titol, $descripcio);
     $stmt->execute();
 }
 
-// Obtener todos los contenidos
+// Consulta para obtener los contenidos
 $result = $conn->query("SELECT * FROM contingut ORDER BY data_creacio DESC");
 ?>
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Admin</title>
+    <title>Gestión de Usuarios y Contenidos</title>
 </head>
 <body>
     <h1>Gestión de Usuarios y Contenidos</h1>
+
+    <!-- Formulario para agregar contenido -->
     <form method="POST">
         <label for="titol">Título:</label>
         <input type="text" name="titol" required>
@@ -36,11 +35,22 @@ $result = $conn->query("SELECT * FROM contingut ORDER BY data_creacio DESC");
         <textarea name="descripcio" required></textarea>
         <button type="submit">Agregar</button>
     </form>
+
+    <!-- Mostrar los contenidos -->
+    <h2>Contenidos</h2>
     <ul>
-        <?php while ($row = $result->fetch_assoc()): ?>
-            <li><?= htmlspecialchars($row['titol']) ?> - <?= htmlspecialchars($row['data_creacio']) ?></li>
-        <?php endwhile; ?>
+        <?php
+        if ($result->num_rows > 0) {
+            // Si hay contenidos, los mostramos
+            while ($row = $result->fetch_assoc()) {
+                echo "<li>" . htmlspecialchars($row['titol']) . " - " . htmlspecialchars($row['data_creacio']) . "</li>";
+            }
+        } else {
+            echo "<li>No hay contenidos disponibles.</li>";
+        }
+        ?>
     </ul>
+
     <a href="logout.php">Cerrar sesión</a>
 </body>
 </html>
