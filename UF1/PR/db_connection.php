@@ -3,7 +3,7 @@
 $host = 'localhost';
 $user = 'admin';
 $password = 'admin';
-$db = 'm7uf1projecte';
+$db = 'm12proj3';
 
 // Conexión a la base de datos
 $conn = new mysqli($host, $user, $password, $db);

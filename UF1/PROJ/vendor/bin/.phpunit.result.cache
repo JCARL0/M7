@@ -1,0 +1,1 @@
+{"version":1,"defects":{"LoginTest::testValidLogin":8,"LoginTest::testInvalidLogin":7,"RolesAccessTest::testRoleAccess":8},"times":{"LoginTest::testValidLogin":0.458,"LoginTest::testInvalidLogin":0.021,"RolesAccessTest::testRoleAccess":0.028}}
