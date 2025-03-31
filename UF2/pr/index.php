@@ -5,7 +5,6 @@ require_once 'models/User.php';
 
 session_start();
 
-// Verificar si la base de datos existe
 try {
     require_once 'config/database.php';
     $db = new Database();

@@ -24,7 +24,7 @@ try {
         id INT AUTO_INCREMENT PRIMARY KEY,
         titulo VARCHAR(255) NOT NULL,
         descripcion TEXT,
-        precio DECIMAL(10, 2),
+        precio FLOAT NOT NULL,
         categoria VARCHAR(50),
         user_id INT,
         creado TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -36,15 +36,13 @@ try {
                 VALUES ('admin', 'admin@admin.admin', '$password_hash', 'admin')");
     
     echo '<div style="color:green;">
-        <p> Base de datos configurada correctamente</p>
+        <p>Base de datos configurada correctamente</p>
         <a href="index.php">Ir al dashboard</a>
     </div>';
 
 } catch (PDOException $e) {
-    echo '<div style="color:red;">
-        <p>Error: '.$e->getMessage().'</p>
-    </div>';
+    echo '<div>
+            <p>Error: '.$e->getMessage().'</p>
+        </div>';
 }
-
-echo '</body></html>';
 ?>

@@ -10,7 +10,7 @@ class UserController {
         if ($this->userModel->register($name, $email, $password)) {
             header("Location: login.php");
         } else {
-            echo "Error durante el registro.";
+            echo "Error al registrar usuario";
         }
     }
 
@@ -20,28 +20,13 @@ class UserController {
             $_SESSION['user'] = $user;
             header("Location: dashboard.php");
         } else {
-            echo "Credenciales inválidas.";
+            echo "Credenciales invalidas";
         }
     }
 
     public function logout() {
         session_destroy();
         header("Location: login.php");
-    }
-
-    public function deleteUser() {
-        $userId = isset($_GET['id']) ? $_GET['id'] : null;
-
-        if ($userId) {
-            $result = $this->userModel->deleteUserById($userId);
-            if ($result) {
-                echo "Usuario eliminado correctamente.";
-            } else {
-                echo "Error al eliminar el usuario.";
-            }
-        } else {
-            echo "Se requiere el ID del usuario.";
-        }
     }
 }
 ?>
