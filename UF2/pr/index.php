@@ -1,34 +1,37 @@
 <?php
-// Incluir controladores necesarios
+// Archivo principal que maneja el enrutamiento de la aplicacion
+
+// Incluir controladores y modelos necesarios
 require_once 'controllers/AuthController.php';
-require_once 'controllers/ProductoController.php';
+require_once 'controllers/AnuncioController.php';
 require_once 'models/User.php';
 
-// Iniciar sesión
+// Iniciar sesion para manejar autenticacion
 session_start();
 
+// Verificar conexion a la base de datos
 try {
-    // Verificar conexión a la base de datos
     require_once 'config/database.php';
     $db = new Database();
     $conn = $db->connect();
-    $conn->query("SELECT 1 FROM productos LIMIT 1");
+    // Prueba simple para verificar que la tabla anuncios existe
+    $conn->query("SELECT 1 FROM anuncios LIMIT 1");
 } catch (PDOException $e) {
-    // Redirigir a setup si la base de datos no existe
+    // Si no existe la base de datos, redirigir al setup
     if ($e->getCode() == '1049') {
         header("Location: setup_database.php");
         exit();
     }
 }
 
-// Instanciar controladores
+// Instanciar controladores principales
 $authController = new AuthController();
-$productoController = new ProductoController();
+$anuncioController = new AnuncioController();
 
-// Obtener URL de la solicitud
+// Obtener la URL solicitada (para enrutamiento)
 $url = $_GET['url'] ?? '';
 
-// Enrutador principal
+// Enrutador basico
 switch ($url) {
     case 'register':
         $authController->register();
@@ -43,46 +46,46 @@ switch ($url) {
     case 'logout':
         $authController->logout();
         break;
-    case 'producto/create':
-        // Solo admin puede crear productos
+    case 'anuncio/create':
+        // Solo administradores pueden crear anuncios
         if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin') {
-            $productoController->createProducto();
+            $anuncioController->createAnuncio();
         } else {
             header("Location: index.php?url=dashboard");
         }
         break;
-    case 'producto/edit':
-        // Solo admin puede editar productos
+    case 'anuncio/edit':
+        // Solo administradores pueden editar anuncios
         if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin') {
-            $productoController->editProducto();
+            $anuncioController->editAnuncio();
         } else {
             header("Location: index.php?url=dashboard");
         }
         break;
-    case 'producto/delete':
-        // Solo admin puede eliminar productos
+    case 'anuncio/delete':
+        // Solo administradores pueden eliminar anuncios
         if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin') {
-            $productoController->deleteProducto();
+            $anuncioController->deleteAnuncio();
         } else {
             header("Location: index.php?url=dashboard");
         }
         break;
     case 'dashboard':
-        // Requiere autenticación
+        // El dashboard requiere autenticacion
         if (isset($_SESSION["user"])) {
-            $productos = $productoController->listProductos();
+            $anuncios = $anuncioController->listAnuncios();
             require 'views/dashboard.php';
         } else {
             header("Location: index.php?url=login");
         }
         break;
     default:
-        // Página principal por defecto
+        // Vista por defecto (homepage)
         echo '<!DOCTYPE html>
         <html>
-        <head><title>Tienda</title></head>
+        <head><title>Plataforma de Anuncios</title></head>
         <body>
-            <h1>Tienda</h1>
+            <h1>Plataforma de Anuncios</h1>
             <nav>
                 <a href="index.php?url=login">Login</a> |
                 <a href="index.php?url=register">Registro</a>

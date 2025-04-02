@@ -1,59 +1,61 @@
 <?php
+// Controlador para manejar autenticacion (login, registro, logout)
+
 require_once __DIR__ . '/../models/User.php';
 
 class AuthController {
-    private $userModel;
-
-    public function __construct() {
-        $this->userModel = new User();
-    }
-
-    // Registrar nuevo usuario
+    // Metodo para registrar nuevos usuarios
     public function register() {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $name = $_POST["name"];
-            $email = $_POST["email"];
-            $password = $_POST["password"];
-
-            if ($this->userModel->register($name, $email, $password)) {
-                // Redirigir a login después de registro exitoso
-                header("Location: index.php?url=login&success=registered");
+            // Validar y procesar datos del formulario
+            $name = $_POST['name'];
+            $email = $_POST['email'];
+            $password = $_POST['password'];
+            
+            $user = new User();
+            if ($user->register($name, $email, $password)) {
+                // Registro exitoso, redirigir a login
+                header("Location: index.php?url=login");
                 exit();
             } else {
+                // Error en registro, mostrar vista con mensaje
                 $error = "Error al registrar usuario";
                 require __DIR__ . '/../views/register.php';
             }
         } else {
+            // Mostrar formulario de registro
             require __DIR__ . '/../views/register.php';
         }
     }
 
-    // Iniciar sesión
+    // Metodo para manejar inicio de sesion
     public function login() {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $email = $_POST['email'];
             $password = $_POST['password'];
-
-            $user = $this->userModel->login($email, $password);
-
-            if ($user) {
-                // Establecer sesión
-                $_SESSION["user"] = $user;
-                $_SESSION["role"] = $user['role'];
+            
+            $user = new User();
+            $userData = $user->login($email, $password);
+            
+            if ($userData) {
+                // Login exitoso, guardar datos en sesion
+                $_SESSION["user"] = $userData;
+                $_SESSION["role"] = $userData["role"];
                 header("Location: index.php?url=dashboard");
                 exit();
             } else {
-                $error = "Credenciales incorrectas";
+                // Credenciales invalidas
+                $error = "Email o contraseña incorrectos";
                 require __DIR__ . '/../views/login.php';
             }
         }
     }
 
-    // Cerrar sesión
+    // Metodo para cerrar sesion
     public function logout() {
-        session_unset();
+        // Destruir la sesion y redirigir
         session_destroy();
-        header("Location: index.php?url=login");
+        header("Location: index.php");
         exit();
     }
 }

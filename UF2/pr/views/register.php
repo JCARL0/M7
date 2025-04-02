@@ -4,10 +4,9 @@
     <title>Registro</title>
 </head>
 <body>
-    <!-- Vista de registro de usuarios -->
     <h1>Registrar</h1>
     
-    <!-- Mostrar errores si existen -->
+    <!-- Mostrar error si existe -->
     <?php if (isset($error)): ?>
         <p><?= $error ?></p>
     <?php endif; ?>
@@ -17,7 +16,7 @@
         <input type="text" name="name" placeholder="Nombre" required><br>
         <input type="email" name="email" placeholder="Email" required><br>
         <input type="password" name="password" placeholder="Contraseña" required><br>
-        <button type="submit">Registrar</button>
+        <button type="submit">Registrar</button> <!-- Boton de envio -->
     </form>
     
     <!-- Enlace para login -->

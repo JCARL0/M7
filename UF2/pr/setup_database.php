@@ -1,12 +1,12 @@
 <?php
-// Configuración de conexión a MySQL
+// Configuracion de conexion a MySQL
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "tienda";
+$dbname = "anuncios";
 
 try {
-    // Crear conexión PDO
+    // Crear conexion sin especificar base de datos
     $conn = new PDO("mysql:host=$servername", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     
@@ -24,10 +24,11 @@ try {
         creado TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )");
     
-    // Crear tabla de productos
-    $conn->exec("CREATE TABLE IF NOT EXISTS productos (
+    // Crear tabla de anuncios
+    $conn->exec("CREATE TABLE IF NOT EXISTS anuncios (
         id INT AUTO_INCREMENT PRIMARY KEY,
         titulo VARCHAR(255) NOT NULL,
+        nombre VARCHAR(255) NOT NULL,
         descripcion TEXT,
         precio FLOAT NOT NULL,
         categoria VARCHAR(50),
@@ -36,19 +37,13 @@ try {
         FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
     )");
     
-    // Crear usuario admin por defecto
+    // Insertar usuario administrador por defecto
     $password_hash = password_hash('admin', PASSWORD_BCRYPT);
     $conn->exec("INSERT IGNORE INTO users (name, email, password_hash, role) 
                 VALUES ('admin', 'admin@admin.admin', '$password_hash', 'admin')");
-    
-    // Mensaje de éxito
-    echo '<div style="color:green;">
-        <p>Base de datos configurada correctamente</p>
-        <a href="index.php">Ir al dashboard</a>
-    </div>';
 
 } catch (PDOException $e) {
-    // Manejo de errores
+    // Mostrar errores si ocurren
     echo '<div>
             <p>Error: '.$e->getMessage().'</p>
         </div>';

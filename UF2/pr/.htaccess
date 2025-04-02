@@ -1,12 +1,12 @@
-# Habilitar reescritura de URLs
+# Habilitar el motor de reescritura
 RewriteEngine On
 
-# Establecer directorio base
+# Establecer el directorio base para las rutas 
 RewriteBase /pr/
 
-# Si el archivo o directorio existe, permitir acceso directo
+# Si el archivo o directorio existe fisicamente, permitir acceso directo
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 
-# Redirigir todas las demás solicitudes a index.php con parámetro URL
+# Redirigir todas las demas solicitudes a index.php con parametro URL
 RewriteRule ^(.+)$ index.php?url=$1 [QSA,L]
