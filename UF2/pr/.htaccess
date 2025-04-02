@@ -1,12 +1,12 @@
-# Enable mod_rewrite
+# Habilitar reescritura de URLs
 RewriteEngine On
 
-# Set the base directory (change "FINAL" if your project folder is different)
+# Establecer directorio base
 RewriteBase /pr/
 
-# If the request is for an existing file or directory, allow it
+# Si el archivo o directorio existe, permitir acceso directo
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 
-# Redirect all other requests to index.php and pass URL as a parameter
+# Redirigir todas las demás solicitudes a index.php con parámetro URL
 RewriteRule ^(.+)$ index.php?url=$1 [QSA,L]

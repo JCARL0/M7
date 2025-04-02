@@ -2,6 +2,7 @@
 require_once __DIR__ . '/../models/Producto.php';
 
 class ProductoController {
+    // Crear nuevo producto
     public function createProducto() {
         if (!isset($_SESSION["user"])) {
             header("Location: index.php?url=login");
@@ -28,11 +29,13 @@ class ProductoController {
         }
     }
 
+    // Listar todos los productos
     public function listProductos() {
         $producto = new Producto();
         return $producto->getAll();
     }
 
+    // Editar producto existente
     public function editProducto() {
         if (!isset($_SESSION["user"])) {
             header("Location: index.php?url=login");
@@ -66,6 +69,7 @@ class ProductoController {
         require __DIR__ . '/../views/edit_producto.php';
     }
 
+    // Eliminar producto
     public function deleteProducto() {
         if (!isset($_SESSION["user"])) {
             header("Location: index.php?url=login");

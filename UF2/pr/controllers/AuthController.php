@@ -8,6 +8,7 @@ class AuthController {
         $this->userModel = new User();
     }
 
+    // Registrar nuevo usuario
     public function register() {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $name = $_POST["name"];
@@ -15,6 +16,7 @@ class AuthController {
             $password = $_POST["password"];
 
             if ($this->userModel->register($name, $email, $password)) {
+                // Redirigir a login después de registro exitoso
                 header("Location: index.php?url=login&success=registered");
                 exit();
             } else {
@@ -26,6 +28,7 @@ class AuthController {
         }
     }
 
+    // Iniciar sesión
     public function login() {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $email = $_POST['email'];
@@ -34,6 +37,7 @@ class AuthController {
             $user = $this->userModel->login($email, $password);
 
             if ($user) {
+                // Establecer sesión
                 $_SESSION["user"] = $user;
                 $_SESSION["role"] = $user['role'];
                 header("Location: index.php?url=dashboard");
@@ -45,6 +49,7 @@ class AuthController {
         }
     }
 
+    // Cerrar sesión
     public function logout() {
         session_unset();
         session_destroy();
