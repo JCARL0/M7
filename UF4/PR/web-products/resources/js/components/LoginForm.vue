@@ -1,7 +1,7 @@
 <template>
 <div class="login-dark">
     <form @submit.prevent="login">
-      <h2>Login</h2>
+      <h2>Iniciar Sesión</h2>
       <div>
         <label>Email: </label>
         <input v-model="email" type="email" required />
@@ -14,11 +14,11 @@
       <div v-if="error">{{ error }}</div>
       <hr>
       <div>
-        <strong>Admin</strong>
+        <strong>Credenciales de prueba:</strong>
         <p>Email: admin@example.com</p>
         <p>Contraseña: password</p>
       </div>
-      <button type="button" @click="$emit('show-register')" class="register-btn">Registrate</button>
+      <button type="button" @click="$emit('show-register')" class="register-btn">¿No tienes cuenta? Regístrate</button>
     </form>
 </div>
 </template>

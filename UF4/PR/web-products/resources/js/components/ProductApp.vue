@@ -16,7 +16,7 @@
         <button v-if="userRole === 'admin'" class="btn-add" @click="showCreateForm = true; editingProduct = null">Añadir producto</button>
       </div>
       <div class="action-bar" v-if="isAuthenticated">
-        <button class="btn-logout" @click="logout">Logout</button>
+        <button class="btn-logout" @click="logout">Cerrar sesión</button>
       </div>
 
       <div v-show="showCreateForm" class="crear-producto-form dark-card">
@@ -30,7 +30,7 @@
           <input v-model.number="newProduct.price" type="number" step="0.01" required />
         </div>
         <div class="form-group">
-          <label>Descripcion: </label>
+          <label>Descripción: </label>
           <input v-model="newProduct.description" required />
         </div>
         <div class="form-group">
@@ -53,7 +53,7 @@
           <input v-model.number="editProductData.price" type="number" step="0.01" required />
         </div>
         <div class="form-group">
-          <label>Descripcion: </label>
+          <label>Descripción: </label>
           <input v-model="editProductData.description" required />
         </div>
         <div class="form-group">

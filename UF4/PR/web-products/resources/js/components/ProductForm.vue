@@ -12,7 +12,7 @@
         <input v-model.number="price" type="number" step="0.01" required />
       </div>
       <div class="mb-3">
-        <label>Descripcion</label>
+        <label>Descripción</label>
         <input v-model="description" required />
       </div>
       <div class="mb-3">

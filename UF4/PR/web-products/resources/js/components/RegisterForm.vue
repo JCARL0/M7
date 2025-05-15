@@ -18,10 +18,10 @@
         <label>Confirmar Contraseña: </label>
         <input v-model="password_confirmation" type="password" required />
       </div>
-      <button type="submit">Register</button>
+      <button type="submit">Registrarse</button>
       <div v-if="error" class="error">{{ error }}</div>
-      <div v-if="success" class="success">¡Registrado!</div>
-      <button type="button" @click="$emit('show-login')" class="register-btn">Login</button>
+      <div v-if="success" class="success">¡Registro exitoso! Ahora puedes iniciar sesión.</div>
+      <button type="button" @click="$emit('show-login')" class="register-btn">¿Ya tienes cuenta? Inicia sesión</button>
     </form>
 </div>
 </template>

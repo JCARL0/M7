@@ -24,7 +24,7 @@
     </div>
   </div>
   <div v-else-if="userRole && products && products.length === 0" class="productos-wrapper mensaje-vacio">
-    <p>Vacio</p>
+    <p>No hay productos para mostrar.</p>
   </div>
 </template>
 
